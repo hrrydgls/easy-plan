@@ -1,0 +1,144 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Easy Plan palette: cool ink neutrals, one cobalt accent, a sun-yellow "today". */
+:root {
+	--bg: #eef1f5;
+	--surface: #ffffff;
+	--surface-2: #f5f7fa;
+	--line: #d9dfe8;
+	--fg: #141a26;
+	--muted: #5f6b7d;
+	--faint: #9aa4b3;
+	--accent: #2f4fe0;
+	--accent-ink: #ffffff;
+	--today: #ffd84d;
+	--today-ink: #141a26;
+	--danger: #c4372d;
+	color-scheme: light;
+}
+.dark {
+	--bg: #0e121a;
+	--surface: #161b25;
+	--surface-2: #1c2230;
+	--line: #2a3242;
+	--fg: #e8ecf3;
+	--muted: #a0aabb;
+	--faint: #6b7588;
+	--accent: #7d93ff;
+	--accent-ink: #0e121a;
+	--danger: #ff7a70;
+	color-scheme: dark;
+}
+
+@theme inline {
+	--color-bg: var(--bg);
+	--color-surface: var(--surface);
+	--color-surface-2: var(--surface-2);
+	--color-line: var(--line);
+	--color-fg: var(--fg);
+	--color-muted: var(--muted);
+	--color-faint: var(--faint);
+	--color-accent: var(--accent);
+	--color-accent-ink: var(--accent-ink);
+	--color-today: var(--today);
+	--color-today-ink: var(--today-ink);
+	--color-danger: var(--danger);
+	--font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-display: 'Bricolage Grotesque Variable', 'Avenir Next', system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+@layer base {
+	html {
+		background: var(--bg);
+	}
+	body {
+		@apply bg-bg text-fg font-sans antialiased;
+		font-size: 15px;
+		line-height: 1.45;
+	}
+	button {
+		cursor: pointer;
+	}
+	:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+	h1,
+	h2,
+	h3 {
+		text-wrap: balance;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply inline-flex items-center justify-center gap-1.5 rounded-[10px] border border-line bg-surface px-3.5 py-2 font-medium transition-colors hover:border-faint disabled:opacity-50;
+	}
+	.btn-primary {
+		@apply border-accent bg-accent font-semibold text-accent-ink hover:border-accent hover:opacity-90;
+	}
+	.btn-danger {
+		@apply text-danger;
+	}
+	.btn-danger-solid {
+		@apply border-danger bg-danger font-semibold text-white;
+	}
+	.input {
+		@apply w-full min-w-0 rounded-[9px] border border-line bg-surface-2 px-3 py-2.5 text-fg placeholder:text-faint;
+	}
+	.label {
+		@apply text-[0.72rem] font-semibold tracking-[0.07em] text-muted uppercase;
+	}
+	.pill {
+		@apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1.5 pr-3 pl-2.5 text-[0.88rem];
+	}
+	.pill[aria-pressed='true'] {
+		@apply border-fg bg-fg font-semibold text-bg;
+	}
+	.card {
+		@apply rounded-2xl border border-line bg-surface;
+	}
+	.page {
+		@apply mx-auto flex w-full max-w-[920px] flex-col gap-4;
+		padding-left: max(16px, env(safe-area-inset-left, 0px));
+		padding-right: max(16px, env(safe-area-inset-right, 0px));
+		padding-top: calc(20px + env(safe-area-inset-top, 0px));
+		padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.slide-next {
+		animation: ep-in-r 0.22s ease-out;
+	}
+	.slide-prev {
+		animation: ep-in-l 0.22s ease-out;
+	}
+	.rise {
+		animation: ep-rise 0.18s ease-out;
+	}
+}
+@keyframes ep-in-r {
+	from {
+		transform: translateX(28px);
+		opacity: 0;
+	}
+}
+@keyframes ep-in-l {
+	from {
+		transform: translateX(-28px);
+		opacity: 0;
+	}
+}
+@keyframes ep-rise {
+	from {
+		transform: translateY(14px);
+		opacity: 0.6;
+	}
+}

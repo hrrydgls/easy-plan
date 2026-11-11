@@ -1,0 +1,21 @@
+# Frontend
+web/node_modules/
+web/build/
+web/.svelte-kit/
+
+# Backend build output
+# Note: server/internal/web/dist IS committed — it's the built frontend
+# embedded via go:embed, kept in git so `go build` works from a fresh clone
+# without Node/pnpm. Regenerate it with `make build-web` when web/ changes.
+/easyplan
+/easyplan-linux-*
+
+# Local data
+.dev-data/
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# OS / editor
+.DS_Store
