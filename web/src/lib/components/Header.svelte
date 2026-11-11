@@ -24,16 +24,6 @@
 	<a href="/calendars" class="mr-auto font-display text-[1.6rem] font-bold tracking-tight no-underline text-fg">
 		Easy<span class="text-accent">.</span>Plan
 	</a>
-	<div class="flex rounded-[10px] border border-line bg-surface p-[3px]" role="group" aria-label="Theme">
-		{#each [['light', '☀ Light'], ['dark', '☾ Dark']] as [t, label]}
-			<button
-				type="button"
-				class="rounded-[7px] px-2.5 py-1 text-[0.88rem] font-medium text-muted aria-pressed:bg-fg aria-pressed:text-bg"
-				aria-pressed={theme.value === t}
-				onclick={() => setTheme(t as 'light' | 'dark')}>{label}</button
-			>
-		{/each}
-	</div>
 	{@render children?.()}
 	{#if session.user}
 		<div class="relative">
@@ -62,6 +52,20 @@
 					<a href="/calendars" class="block rounded-lg px-2.5 py-2 text-fg no-underline hover:bg-surface-2" role="menuitem"
 						>All calendars</a
 					>
+					<div class="px-2.5 pb-1 pt-2 text-[0.72rem] font-semibold uppercase tracking-wide text-muted">Theme</div>
+					<div class="mx-1 mb-1.5 flex rounded-[10px] border border-line bg-bg p-[3px]" role="group" aria-label="Theme">
+						{#each [['light', '☀ Light'], ['dark', '☾ Dark']] as [t, label]}
+							<button
+								type="button"
+								class="flex-1 rounded-[7px] px-2.5 py-1 text-[0.88rem] font-medium text-muted aria-pressed:bg-fg aria-pressed:text-bg"
+								aria-pressed={theme.value === t}
+								onclick={(e) => {
+									e.stopPropagation();
+									setTheme(t as 'light' | 'dark');
+								}}>{label}</button
+							>
+						{/each}
+					</div>
 					<button type="button" class="block w-full rounded-lg px-2.5 py-2 text-left hover:bg-surface-2" role="menuitem" onclick={logout}
 						>Log out</button
 					>

@@ -13,7 +13,6 @@
 	const id = $derived(Number(page.params.id));
 
 	let cal = $state<CalendarDetail | null>(null);
-	let calendars = $state<Calendar[]>([]);
 	let loadError = $state('');
 
 	$effect(() => {
@@ -29,7 +28,6 @@
 				if (e instanceof ApiError && e.status === 404) goto('/calendars', { replaceState: true });
 				else loadError = e.message;
 			});
-		api.calendars().then((c) => (calendars = c)).catch(() => {});
 	});
 
 	// ---------- Month navigation ----------
@@ -118,23 +116,6 @@
 			<button type="button" class="btn w-[38px] !px-0" aria-label="Next month" onclick={() => go(1)}>›</button>
 		</div>
 	</Header>
-
-	<div class="flex flex-wrap items-center gap-2">
-		<label for="cal-switch" class="label">Calendar</label>
-		<select
-			id="cal-switch"
-			class="input !w-auto max-w-full !py-1.5 font-semibold"
-			value={String(id)}
-			onchange={(e) => {
-				const v = e.currentTarget.value;
-				goto(v === 'manage' ? '/calendars' : `/calendar/${v}`);
-			}}
-		>
-			{#each calendars as c (c.id)}<option value={String(c.id)}>{c.name}</option>{/each}
-			{#if !calendars.length && cal}<option value={String(cal.id)}>{cal.name}</option>{/if}
-			<option value="manage">Manage calendars…</option>
-		</select>
-	</div>
 
 	{#if loadError}
 		<p class="card m-0 p-5 text-danger">{loadError}</p>
